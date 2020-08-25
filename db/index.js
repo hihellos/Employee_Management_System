@@ -93,20 +93,37 @@ function runSearch() {
     inquirer
       .prompt([
           {
-              name: "firstName",
-              type: "input",
-              message: "What is the employee's first name?"
+            name: "firstName",
+            type: "input",
+            message: "What is the employee's first name?"
           },
           {
             name: "lastName",
             type: "input",
             message: "What is the employee's last name?"
-        }
+        },
+        {
+          name: "role_id",
+          type: "input",
+          message: "What is this employee's role ID?"
+        },
+        {
+          name: "manager_id",
+          type: "input",
+          message: "What is this employee's manager's ID?",
+          // choices: ["", "", ""]
+      }
+
       ]).then(function(answer) {
-        var query = "INSERT INTO employee (first_name, last_name) VALUES ?";
-        connection.query(query, { firstName: answer.firstName }, { lastName: answer.lastName }, function(err, res) {
+        console.log("answer: ", answer);
+        var query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+        
+        connection.query(query, [answer.firstName, answer.lastName, answer.role_id, answer.manager_id], function(err, res) {
+          if (err) throw (err);
+
+          console.log("result: ", res);
           for (var i = 0; i < res.length; i++) {
-            console.log(`New Employee: ${res[i].firstName} ${res[i].lastName}`);
+            console.log(`New Employee: ${res[i].firstName} ${res[i].lastName} ${res[i].roleID} ${res[i].manID}`);
           }
           runSearch();
         });
