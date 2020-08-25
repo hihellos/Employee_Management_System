@@ -1,5 +1,5 @@
 // connect mySQL database 
-var mysql = require("mysql");
+const mysql = require("mysql");
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -11,6 +11,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
-//   runSearch();
-  console.log("Connected!");
+  // console.log("Connected!");
 });
+
+module.exports = connection;

@@ -1,6 +1,8 @@
 // class db and all querys
 const cTable = require('console.table');
 const inquirer = require('inquirer');
+const mysql = require("mysql");
+const connection = require("./connection.js");
 
 // class Employees {
 //     constructor
@@ -101,7 +103,7 @@ function runSearch() {
             message: "What is the employee's last name?"
         }
       ]).then(function(answer) {
-        var query = "INSERT INTO employee (first_name, last_name) VALUES (?, ?)";
+        var query = "INSERT INTO employee (first_name, last_name) VALUES ?";
         connection.query(query, { firstName: answer.firstName }, { lastName: answer.lastName }, function(err, res) {
           for (var i = 0; i < res.length; i++) {
             console.log(`New Employee: ${res[i].firstName} ${res[i].lastName}`);
