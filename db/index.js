@@ -6,6 +6,8 @@ const inquirer = require('inquirer');
 //     constructor
 // }
 
+runSearch();
+
 function runSearch() {
     inquirer
       .prompt({
@@ -13,12 +15,12 @@ function runSearch() {
         type: "rawlist",
         message: "What would you like to do?",
         choices: [
-          "Add Employee Department" ,
-          "Add Employee", 
-          "Add Employee Role",
           "View All Departments",
-          "View All Employees",
           "View All Roles",
+          "View All Employees",
+          "Add Employee", 
+          "Add Employee Department" ,
+          "Add Employee Role",
           "Update Employee Role"
         ]
       })
@@ -64,7 +66,7 @@ function runSearch() {
       runSearch();
     });
   }
-  ​
+  
   function viewRoles() {
     var query = "SELECT title FROM employees.role"
     connection.query(query, function(err, res) {
@@ -99,10 +101,16 @@ function runSearch() {
             message: "What is the employee's last name?"
         }
       ]).then(function(answer) {
-        var query = "INSERT "
+        var query = "INSERT INTO employee (first_name, last_name) VALUES (?, ?)";
+        connection.query(query, { firstName: answer.firstName }, { lastName: answer.lastName }, function(err, res) {
+          for (var i = 0; i < res.length; i++) {
+            console.log(`New Employee: ${res[i].firstName} ${res[i].lastName}`);
+          }
+          runSearch();
+        });
       });
   }
-  ​
+
   function addEmployeeDept() {
     // inquirer
     //   .prompt({
@@ -121,7 +129,7 @@ function runSearch() {
     //     });
     //   });
   }
-  ​
+  
   function addEmployeeRole() {
     // inquirer
     //   .prompt({
