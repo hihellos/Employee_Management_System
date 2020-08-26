@@ -19,7 +19,8 @@ function runSearch() {
           "Add Employee", 
           "Add Department" ,
           "Add Role",
-          "Update Employee Role"
+          "Update Employee Role", 
+          "Exit"
         ]
       })
       .then(function(answer) {
@@ -50,7 +51,11 @@ function runSearch() {
 
         case "Update Employee Role":
           updateEmployeeRole();
-          break;  
+          break;
+        
+        case "Exit":
+          exit();
+          break;
         }
       });
   }
@@ -174,21 +179,25 @@ function runSearch() {
   }
 
   function updateEmployeeRole() {
-    // inquirer
-    // .prompt([
-    //     {
-    //         name: "updateRole",
-    //         type: "choices",
-    //         message: "What is the name of the employee you would like to update?",
-    //     },
-    // ]).then(function(answer) {
-    //   var query = "SELECT first_name, last_name FROM employees.employee" ;
-    //   connection.query(query, [answer.deparmentName], function(err, res) {
-    //     if (err) throw (err);
-    //     for (var i = 0; i < res.length; i++) {
-    //       console.table(`New Department: ${res[i].department}`);
-    //     }
-    //     runSearch();
-    //   });
-    // });
+    inquirer
+    .prompt([
+        {
+            name: "updateRole",
+            type: "choices",
+            message: "What is the name of the employee you would like to update?",
+        },
+    ]).then(function(answer) {
+      var query = "SELECT first_name, last_name FROM employees.employee" ;
+      connection.query(query, [answer.deparmentName], function(err, res) {
+        if (err) throw (err);
+        for (var i = 0; i < res.length; i++) {
+          console.table(`New Department: ${res[i].department}`);
+        }
+        runSearch();
+      });
+    });
+  }
+
+  function exit() {
+    process.exit();
   }
