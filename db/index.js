@@ -117,10 +117,7 @@ function runSearch() {
         connection.query(query, [answer.firstName, answer.lastName, answer.role_id, answer.manager_id], function(err, res) {
           if (err) throw (err);
 
-          console.log("result: ", res);
-          for (var i = 0; i < res.length; i++) {
-            console.table(`New Employee: ${res[i].firstName} ${res[i].lastName} ${res[i].roleID} ${res[i].manID}`);
-          }
+          console.log(`New Employee Added: ${answer.firstName} ${answer.lastName}`);
           runSearch();
         });
       });
@@ -138,9 +135,7 @@ function runSearch() {
       var query = "INSERT INTO department (name) VALUE ('?')" ;
       connection.query(query, [answer.deparmentName], function(err, res) {
         if (err) throw (err);
-        for (var i = 0; i < res.length; i++) {
-          console.table(`New Department: ${res[i].department}`);
-        }
+        console.log(`New Department Added: ${answer.departmentName}`);
         runSearch();
       });
     });
@@ -170,9 +165,7 @@ function runSearch() {
         var query = "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)";
         connection.query(query, [answer.title, answer.salary, answer.departmentID], function(err, res) {
           if (err) throw (err);
-          for (var i = 0; i < res.length; i++) {
-            console.log("Added Role");
-          }
+          console.log(`New Role Added: ${answer.title}`);
           runSearch();
         });
       });
