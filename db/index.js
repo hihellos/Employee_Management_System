@@ -56,31 +56,25 @@ function runSearch() {
   }
 
   function viewDepts() {
-    var query = "SELECT name FROM employees.department"
+    var query = "SELECT name, id FROM department ORDER BY id ASC"
     connection.query(query, function(err, res) {
-      for (var i = 0; i < res.length; i++) {
-        console.table(res[i].name);
-      }
+      console.table(res);
       runSearch();
     });
   }
   
   function viewRoles() {
-    var query = "SELECT title FROM employees.role"
+    var query = "SELECT role.title, role.salary, department.name FROM role, department WHERE department.id = role.department_id"
     connection.query(query, function(err, res) {
-      for (var i = 0; i < res.length; i++) {
-        console.table(res[i].title);
-      }
+      console.table(res);
       runSearch();
     });
   }
 
   function viewEmployees() {
-    var query = "SELECT first_name, last_name FROM employees.employee"
+    var query = "SELECT employee.first_name, employee.last_name, role.title FROM employee, role WHERE employee.id = role.id"
     connection.query(query, function(err, res) {
-      for (var i = 0; i < res.length; i++) {
-        console.table(`${res[i].first_name} ${res[i].last_name}`);
-      }
+      console.table(res);
       runSearch();
     });
   }
@@ -180,21 +174,21 @@ function runSearch() {
   }
 
   function updateEmployeeRole() {
-    inquirer
-    .prompt([
-        {
-            name: "updateRole",
-            type: "choices",
-            message: "What is the name of the employee you would like to update?",
-        },
-    ]).then(function(answer) {
-      var query = "INSERT INTO department (name) VALUE ('?')" ;
-      connection.query(query, [answer.deparmentName], function(err, res) {
-        if (err) throw (err);
-        for (var i = 0; i < res.length; i++) {
-          console.table(`New Department: ${res[i].department}`);
-        }
-        runSearch();
-      });
-    });
+    // inquirer
+    // .prompt([
+    //     {
+    //         name: "updateRole",
+    //         type: "choices",
+    //         message: "What is the name of the employee you would like to update?",
+    //     },
+    // ]).then(function(answer) {
+    //   var query = "SELECT first_name, last_name FROM employees.employee" ;
+    //   connection.query(query, [answer.deparmentName], function(err, res) {
+    //     if (err) throw (err);
+    //     for (var i = 0; i < res.length; i++) {
+    //       console.table(`New Department: ${res[i].department}`);
+    //     }
+    //     runSearch();
+    //   });
+    // });
   }
