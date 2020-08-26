@@ -4,10 +4,6 @@ const inquirer = require('inquirer');
 const mysql = require("mysql");
 const connection = require("./connection.js");
 
-// class Employees {
-//     constructor
-// }
-
 runSearch();
 
 function runSearch() {
@@ -21,8 +17,8 @@ function runSearch() {
           "View All Roles",
           "View All Employees",
           "Add Employee", 
-          "Add Employee Department" ,
-          "Add Employee Role",
+          "Add Department" ,
+          "Add Role",
           "Update Employee Role"
         ]
       })
@@ -44,12 +40,12 @@ function runSearch() {
           addEmployee();
           break;
 
-        case "Add Employee Department":
-          addEmployeeDept();
+        case "Add Department":
+          addDept();
           break;
 
-        case "Add Employee Role":
-          addEmployeeRole();
+        case "Add Role":
+          addRole();
           break;
 
         case "Update Employee Role":
@@ -131,34 +127,33 @@ function runSearch() {
       });
   }
 
-  function addEmployeeDept() {
+  function addDept() {
     inquirer
-      // .prompt([
-      //   {
-      //     name: "departmentID",
-      //     type: "input",
-      //     message: "What department will this employee work in?",
-      //     choices: ["Engineering", "Sales", "HR", "IT"]
-      //   }     
-      // ])
-      // .then(function(answer) {
-      //   var query = "SELECT position, song, year FROM top5000 WHERE ?";
-      //   connection.query(query, { artist: answer.artist }, function(err, res) {
-      //     for (var i = 0; i < res.length; i++) {
-      //       console.log("Position: " + res[i].position + " || Song: " + res[i].song + " || Year: " + res[i].year);
-      //     }
-      //     runSearch();
-      //   });
-      // });
-  }
+    .prompt([
+        {
+            name: "departmentName",
+            type: "input",
+            message: "What is the name of the department you would like to add?",
+        },
+    ]).then(function(answer) {
+      var query = "INSERT INTO department (name) VALUE ('?')" ;
+      connection.query(query, [answer.deparmentName], function(err, res) {
+        if (err) throw (err);
+        for (var i = 0; i < res.length; i++) {
+          console.table(`New Department: ${res[i].department}`);
+        }
+        runSearch();
+      });
+    });
+}
   
-  function addEmployeeRole() {
+  function addRole() {
     inquirer
     .prompt([
       {
         name: "departmentID",
-        type: "input",
-        message: "What department will this employee work in? Select 1-Engineering, 2-Sales, 3-HR, 4-IT, 5-Legal",
+        type: "list",
+        message: "What department will this role be in? Select 1-Engineering, 2-Sales, 3-HR, 4-IT, 5-Legal",
         choices: [1, 2, 3, 4, 5]
       },
       {
@@ -177,7 +172,7 @@ function runSearch() {
         connection.query(query, [answer.title, answer.salary, answer.departmentID], function(err, res) {
           if (err) throw (err);
           for (var i = 0; i < res.length; i++) {
-            console.table(`New Employee: ${res[i].title} ${res[i].salary} ${res[i].departmentID}`);
+            console.log("Added Role");
           }
           runSearch();
         });
@@ -185,11 +180,21 @@ function runSearch() {
   }
 
   function updateEmployeeRole() {
-    // var query = "SELECT first_name, last_name FROM employees.department"
-    // connection.query(query, function(err, res) {
-    //   for (var i = 0; i < res.length; i++) {
-    //     console.log(`${res[i].first_name} ${res[i].last_name}`);
-    //   }
-    //   runSearch();
-    // });
+    inquirer
+    .prompt([
+        {
+            name: "updateRole",
+            type: "choices",
+            message: "What is the name of the employee you would like to update?",
+        },
+    ]).then(function(answer) {
+      var query = "INSERT INTO department (name) VALUE ('?')" ;
+      connection.query(query, [answer.deparmentName], function(err, res) {
+        if (err) throw (err);
+        for (var i = 0; i < res.length; i++) {
+          console.table(`New Department: ${res[i].department}`);
+        }
+        runSearch();
+      });
+    });
   }
