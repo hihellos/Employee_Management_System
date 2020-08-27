@@ -1,7 +1,7 @@
 # Employee_Management_System
 > Content managemnt system with a command line interface for organizing a company's employees using node, express, inquirer, and MySQL.
 
-<img src="assets/images/EMS.gif" style="height:500px">  
+<iframe src="https://drive.google.com/file/d/1C11j0r-gZp6jPhHQRSaZrSDCQmqGHWEr/preview" width="640" height="480"></iframe>
 
 ## Table of Contents
 1. [About this project](#about)
