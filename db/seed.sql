@@ -28,6 +28,6 @@ VALUES
     ("Monica", "Geller", 1, NULL),
     ("Chandler", "Bing", 2, 2),
     ("Rachel", "Green", 2, NULL),
-    ("Ross", "Geller", 3, NULL);
-    ("Gunther", "Central Perk", 3, 4);
+    ("Ross", "Geller", 3, NULL),
+    ("Gunther", "Central Perk", 3, 4),
     ("Janice", "Hosenstein", 4, NULL);
