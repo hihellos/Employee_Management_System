@@ -109,13 +109,12 @@ function addEmployee() {
       },
     ])
     .then(function (answer) {
-      console.log("answer: ", answer);
       var query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
 
       connection.query(
         query, [answer.firstName, answer.lastName, answer.role_id, answer.manager_id], function (err, res) {
           if (err) throw err;
-          console.log(`New Employee Added: ${answer.firstName} ${answer.lastName}`);
+          console.log(`\n New Employee Added: ${answer.firstName} ${answer.lastName} \n`);
           runSearch();
         }
       );
@@ -135,7 +134,7 @@ function addDept() {
       var query = "INSERT INTO department (name) VALUE (?)";
       connection.query(query, answer.departmentName, function (err, res) {
         if (err) throw err;
-        console.log(`New Department Added: ${answer.departmentName}`);
+        console.log(`\n New Department Added: ${answer.departmentName} \n`);
         runSearch();
       });
     });
@@ -203,7 +202,7 @@ function updateEmployeeRole() {
       connection.query(query, [answer.newRoleTitle, answer.newRoleSalary, answer.newRoleDeptID, parseInt(answer.currentEmployeeID)],
         function (err, res) {
           if (err) throw err;
-          console.log("Successfully Updated Role");
+          console.log(`\n Successfully Updated Role \n`);
           runSearch();
         }
       );
